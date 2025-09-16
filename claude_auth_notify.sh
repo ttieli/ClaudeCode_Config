@@ -3,8 +3,27 @@
 # Claude Code 授权请求通知脚本
 # 用于在 Claude Code 请求授权时发送系统通知
 
-# 获取当前项目和时间信息
-PROJECT_NAME=$(basename "$PWD")
+# 智能获取项目名称
+get_project_name() {
+    # 方法1：如果在 Git 仓库中，使用仓库名
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        echo $(basename "$(git rev-parse --show-toplevel)")
+    # 方法2：如果当前目录名是 "Project"，尝试获取最近修改的子目录
+    elif [ "$(basename "$PWD")" = "Project" ]; then
+        # 获取最近修改的子目录作为项目名
+        RECENT_DIR=$(ls -td */ 2>/dev/null | head -1 | sed 's|/$||')
+        if [ -n "$RECENT_DIR" ]; then
+            echo "$RECENT_DIR"
+        else
+            echo "$(basename "$PWD")"
+        fi
+    # 方法3：使用当前目录名
+    else
+        echo "$(basename "$PWD")"
+    fi
+}
+
+PROJECT_NAME=$(get_project_name)
 TIMESTAMP=$(date "+%H:%M:%S")
 
 # 解析输入参数（如果有）

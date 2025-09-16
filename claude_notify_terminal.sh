@@ -2,8 +2,28 @@
 
 # 使用 terminal-notifier 的通知脚本（最可靠）
 
+# 智能获取项目名称
+get_project_name() {
+    # 方法1：如果在 Git 仓库中，使用仓库名
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        echo $(basename "$(git rev-parse --show-toplevel)")
+    # 方法2：如果当前目录名是 "Project"，尝试获取最近修改的子目录
+    elif [ "$(basename "$PWD")" = "Project" ]; then
+        # 获取最近修改的子目录作为项目名
+        RECENT_DIR=$(ls -td */ 2>/dev/null | head -1 | sed 's|/$||')
+        if [ -n "$RECENT_DIR" ]; then
+            echo "$RECENT_DIR"
+        else
+            echo "$(basename "$PWD")"
+        fi
+    # 方法3：使用当前目录名
+    else
+        echo "$(basename "$PWD")"
+    fi
+}
+
 # 获取项目信息
-PROJECT_NAME=$(basename "$PWD")
+PROJECT_NAME=$(get_project_name)
 PROJECT_PATH="$PWD"
 TIMESTAMP=$(date "+%H:%M")
 FULL_TIME=$(date "+%Y-%m-%d %H:%M:%S")
