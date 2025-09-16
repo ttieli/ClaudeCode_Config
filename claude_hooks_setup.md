@@ -68,21 +68,12 @@ bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCo
 bash ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh "测试授权提醒"
 ```
 
-**通知特点（标准版）：**
-- ⚠️ 紧急提示音（Blow/Ping）
-- 🔔 初始发送 3 个通知（立即、0.5秒、10秒）
-- ⏰ 每 30 秒自动重复提醒，共 3 次
+**通知特点：**
+- ⚠️ 紧急提示音（Blow/Ping/Basso）
+- 🔔 连续 3 个通知（立即、1秒、5秒）
 - 📱 忽略勿扰模式
 - 🖥️ 终端醒目显示框
-
-**可选：超强提醒版**
-如需更强的提醒效果，可使用持久对话框版本：
-```bash
-bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_dialog.sh"
-```
-- 弹出置顶对话框，必须手动响应
-- 提供"立即查看"和"稍后提醒"按钮
-- 5分钟后自动关闭
+- 🚀 自动激活 VSCode 窗口
 
 ---
 
@@ -117,8 +108,7 @@ terminal-notifier -title "❌ 工具执行错误" -subtitle "$(basename $PWD)" -
 | 脚本文件 | Hook 事件 | 用途 |
 |---------|-----------|------|
 | `claude_notify_terminal.sh` | Stop | 任务完成通知 |
-| `claude_auth_notify.sh` | HumanInputRequired | 授权请求提醒（增强版） |
-| `claude_auth_dialog.sh` | HumanInputRequired | 授权请求对话框（超强版） |
+| `claude_auth_notify.sh` | HumanInputRequired | 授权请求提醒 |
 
 ## 日志文件
 

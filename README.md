@@ -18,7 +18,6 @@ ClaudeCode_Config/
 ├── claude_hooks_setup.md          # 详细配置指南
 ├── claude_notify_terminal.sh      # 任务完成通知脚本
 ├── claude_auth_notify.sh          # 授权请求提醒脚本
-├── claude_auth_dialog.sh          # 授权请求对话框脚本（可选）
 └── hooks.md                      # Hooks 原理说明
 ```
 
