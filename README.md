@@ -6,16 +6,15 @@
 
 - 🔔 **双重通知** - 任务完成温和提醒 + 授权请求紧急提示
 - 📊 **智能识别** - 自动显示项目名称、Git 分支、文件变更数
-- 📝 **完整日志** - 分别记录任务完成和授权请求历史
 - 🎨 **终端美化** - 格式化的终端输出，清晰易读
 - 🚀 **VSCode 优化** - 完美支持 VSCode 集成终端
+- 📝 **可选日志** - 默认禁用，需要时可启用
 
 ## 📁 项目结构
 
 ```
 ClaudeCode_Config/
 ├── README.md                      # 本文档
-├── claude_hooks_setup.md          # 详细配置指南
 ├── claude_notify_terminal.sh      # 任务完成通知脚本
 ├── claude_auth_notify.sh          # 授权请求提醒脚本
 └── hooks.md                      # Hooks 原理说明
@@ -26,36 +25,56 @@ ClaudeCode_Config/
 ### 1. 安装 terminal-notifier
 
 ```bash
-# 安装 Homebrew（如果未安装）
+# 检查 Homebrew
+brew --version
+
+# 如果未安装 Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # 安装 terminal-notifier
 brew install terminal-notifier
+
+# 验证安装
+terminal-notifier -title "测试" -message "安装成功！" -sound Glass
 ```
 
-### 2. 配置 Claude Code Hooks
+### 2. 系统权限设置
+
+```bash
+# 打开系统通知设置
+open x-apple.systempreferences:com.apple.preference.notifications
+```
+
+- **VSCode 用户**：找到 **Visual Studio Code**，开启 **允许通知**
+- **Terminal 用户**：找到 **Terminal**，开启 **允许通知**
+
+### 3. 配置 Claude Code Hooks
 
 在 Claude Code 会话中执行 `/hooks`，配置两个事件：
 
-#### 任务完成通知（Stop 事件）
+#### Stop 事件 - 任务完成通知
+
 ```bash
 bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_notify_terminal.sh"
 ```
-- 触发时机：Claude Code 完成响应后
-- 提示音：Glass（温和）
-- 通知内容：项目名称、Git 状态、完成时间
 
-#### 授权请求提醒（HumanInputRequired 事件）
+- **触发时机**：Claude Code 完成响应后
+- **提示音**：Glass（温和）
+- **通知内容**：项目名称、Git 状态、完成时间
+
+#### HumanInputRequired 事件 - 授权请求提醒
+
 ```bash
 bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh"
 ```
-- 触发时机：Claude Code 需要用户授权时
-- 提示音：Blow（紧急）
-- 特性：2个相同通知（间隔2秒）、忽略勿扰模式、自动激活 VSCode
+
+- **触发时机**：Claude Code 需要用户授权时
+- **提示音**：Blow（紧急）
+- **特性**：2个相同通知（间隔2秒）、忽略勿扰模式、自动激活 VSCode
 
 两个配置都保存到 **User Settings**（所有项目生效）
 
-### 3. 测试通知
+### 4. 测试通知
 
 ```bash
 # 测试任务完成通知
@@ -68,6 +87,7 @@ bash ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/c
 ## 📖 使用效果
 
 ### 任务完成通知示例
+
 ```
 ╔════════════════════════════════════════════════════════╗
 ║              ✅ Claude Code 任务完成                     ║
@@ -80,6 +100,7 @@ bash ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/c
 ```
 
 ### 授权请求提醒示例
+
 ```
 ╔════════════════════════════════════════════════════════╗
 ║                                                          ║
@@ -94,25 +115,68 @@ bash ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/c
 ╚════════════════════════════════════════════════════════╝
 ```
 
-## 🛠️ 脚本说明
+## 🛠️ Hook 事件详解
 
-| 脚本文件 | Hook 事件 | 用途 | 提示音 |
-|---------|-----------|------|--------|
-| `claude_notify_terminal.sh` | Stop | 任务完成通知 | Glass（温和） |
-| `claude_auth_notify.sh` | HumanInputRequired | 授权请求提醒 | Blow（紧急） |
+### 核心事件（已配置）
+
+| Hook 事件 | 脚本文件 | 用途 | 提示音 |
+|-----------|---------|------|--------|
+| Stop | `claude_notify_terminal.sh` | 任务完成通知 | Glass（温和） |
+| HumanInputRequired | `claude_auth_notify.sh` | 授权请求提醒 | Blow（紧急） |
+
+### 可选事件（扩展用）
+
+#### PreToolUse 事件 - 工具调用监控
+
+监控 Claude Code 即将执行的操作，特别是敏感命令：
+
+```bash
+# 记录所有工具调用
+echo "[$(date)] 工具调用: $1" >> ~/claude_tools.log
+
+# 或对特定工具发送通知
+if [[ "$1" == *"rm"* ]] || [[ "$1" == *"delete"* ]]; then
+    terminal-notifier -title "⚠️ 删除操作" -message "$1" -sound Basso
+fi
+```
+
+#### ToolOutputError 事件 - 错误提醒
+
+当工具执行出错时立即通知：
+
+```bash
+terminal-notifier -title "❌ 工具执行错误" -subtitle "$(basename $PWD)" -message "请检查终端输出" -sound Sosumi
+```
+
+## 📝 自定义配置
+
+### 修改通知声音
+
+编辑脚本中的 `sound name` 参数：
+
+- **紧急**：Blow, Basso, Sosumi, Hero
+- **提醒**：Glass, Ping, Pop
+- **温和**：Purr, Tink
+- **特殊**：Morse, Submarine, Funk, Frog
+
+### 修改通知图标
+
+在脚本中使用不同表情符号：
+
+- ✅ 任务完成
+- ⚠️ 需要授权
+- ❌ 执行错误
+- 🚀 部署任务
+- 🔧 修复任务
+- 📝 文档任务
 
 ## 📊 日志管理（可选）
 
-日志功能默认已禁用。如需启用，请编辑脚本文件，取消注释日志相关代码。
+日志功能默认已禁用。如需启用，请编辑脚本文件，找到以下注释并取消：
 
-### 启用日志
-
-编辑脚本文件，找到以下注释部分并取消注释：
 ```bash
 # 日志功能（默认禁用，如需启用请取消注释）
 ```
-
-### 日志文件位置
 
 启用后，日志将保存在：
 - 任务日志：`~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_tasks.log`
@@ -124,23 +188,33 @@ bash ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/c
 
 1. **测试 terminal-notifier：**
 ```bash
+which terminal-notifier
 terminal-notifier -title "测试" -message "通知测试" -sound Glass
 ```
 
 2. **检查系统权限：**
-```bash
-open x-apple.systempreferences:com.apple.preference.notifications
-```
-- VSCode 用户：确保 **Visual Studio Code** 有通知权限
-- Terminal 用户：确保 **Terminal** 有通知权限
+   - VSCode 用户：确保 **Visual Studio Code** 有通知权限
+   - Terminal 用户：确保 **Terminal** 有通知权限
 
 3. **检查勿扰模式：**
-- 确保 Mac 未开启勿扰/专注模式
-- 授权提醒会忽略勿扰模式，但任务完成通知不会
+   - 确保 Mac 未开启勿扰/专注模式
+   - 授权提醒会忽略勿扰模式，但任务完成通知不会
 
-### VSCode 用户注意
+4. **检查脚本权限：**
+```bash
+ls -la ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/*.sh
+```
 
-1. 必须给 **Visual Studio Code** 应用（不是 Terminal）授予通知权限
+5. **检查 Hook 配置：**
+```bash
+# 在 Claude Code 中查看当前配置
+/hooks
+```
+
+### VSCode 特殊说明
+
+VSCode 集成终端的通知需要：
+1. 给 **Visual Studio Code** 应用授予通知权限（不是 Terminal）
 2. 使用 terminal-notifier 而非 osascript 更可靠
 3. 授权提醒会自动激活 VSCode 窗口
 
@@ -152,37 +226,13 @@ brew install terminal-notifier
 which terminal-notifier  # 应显示：/usr/local/bin/terminal-notifier
 ```
 
-## 📝 自定义配置
-
-### 修改通知声音
-
-编辑脚本中的 `sound name` 参数：
-
-**温和提示音：**
-- Glass, Tink, Purr, Pop
-
-**紧急提示音：**
-- Blow, Basso, Sosumi, Hero
-
-**特殊效果音：**
-- Morse, Submarine, Funk, Frog
-
-### 修改通知图标
-
-在脚本中使用不同表情符号：
-- ✅ 任务完成
-- ⚠️ 需要授权
-- ❌ 执行错误
-- 🚀 部署任务
-- 🔧 修复任务
-- 📝 文档任务
-
 ## 🎯 最佳实践
 
 1. **两个 Hook 都要配置** - 任务完成和授权提醒相辅相成
 2. **保存到用户设置** - 确保所有项目都能使用
-3. **定期清理日志** - 避免日志文件过大
+3. **测试后再使用** - 先用测试命令验证配置正确
 4. **自定义提示音** - 根据个人喜好调整声音类型
+5. **日志按需启用** - 避免不必要的磁盘写入
 
 ## 📄 许可
 
@@ -194,5 +244,4 @@ which terminal-notifier  # 应显示：/usr/local/bin/terminal-notifier
 
 ---
 
-*版本：2.0 | 最后更新：2025-09-16*
-*新增授权提醒功能，优化项目结构*
+*版本：2.1 | 最后更新：2025-09-16*
