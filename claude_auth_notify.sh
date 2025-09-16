@@ -25,7 +25,7 @@ if command -v terminal-notifier &> /dev/null; then
     sleep 0.5
     terminal-notifier \
         -title "🔔 请查看终端" \
-        -subtitle "时间: $TIMESTAMP" \
+        -subtitle "项目: $PROJECT_NAME | 时间: $TIMESTAMP" \
         -message "Claude Code 正在等待您的响应" \
         -sound "Ping" \
         -group "claude-auth-reminder"
