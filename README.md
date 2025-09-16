@@ -50,8 +50,8 @@ bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCo
 bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh"
 ```
 - 触发时机：Claude Code 需要用户授权时
-- 提示音：Blow + Ping（紧急）
-- 特性：连续两次通知、忽略勿扰模式、自动激活 VSCode
+- 提示音：Blow（紧急）
+- 特性：2个相同通知（间隔2秒）、忽略勿扰模式、自动激活 VSCode
 
 两个配置都保存到 **User Settings**（所有项目生效）
 
@@ -99,7 +99,7 @@ bash ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/c
 | 脚本文件 | Hook 事件 | 用途 | 提示音 |
 |---------|-----------|------|--------|
 | `claude_notify_terminal.sh` | Stop | 任务完成通知 | Glass（温和） |
-| `claude_auth_notify.sh` | HumanInputRequired | 授权请求提醒 | Blow/Ping（紧急） |
+| `claude_auth_notify.sh` | HumanInputRequired | 授权请求提醒 | Blow（紧急） |
 
 ## 📊 日志管理（可选）
 

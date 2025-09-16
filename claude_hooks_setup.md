@@ -69,8 +69,8 @@ bash ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/c
 ```
 
 **通知特点：**
-- ⚠️ 紧急提示音（Blow/Ping/Basso）
-- 🔔 连续 3 个通知（立即、1秒、5秒）
+- ⚠️ 紧急提示音（Blow）
+- 🔔 2个相同通知（间隔2秒）
 - 📱 忽略勿扰模式
 - 🖥️ 终端醒目显示框
 - 🚀 自动激活 VSCode 窗口

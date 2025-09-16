@@ -12,36 +12,26 @@ AUTH_TYPE="${1:-需要您的授权}"
 
 # 使用 terminal-notifier 发送紧急通知
 if command -v terminal-notifier &> /dev/null; then
-    # 第一个通知：主要授权通知（使用提醒样式）
+    # 第一个通知
     terminal-notifier \
         -title "⚠️ Claude Code 需要授权" \
-        -subtitle "项目: $PROJECT_NAME" \
-        -message "$AUTH_TYPE - 请立即查看终端" \
+        -subtitle "项目: $PROJECT_NAME | 时间: $TIMESTAMP" \
+        -message "$AUTH_TYPE" \
         -sound "Blow" \
         -group "claude-auth" \
         -ignoreDnD \
-        -activate "com.microsoft.VSCode" \
-        -sender "com.apple.Terminal"
+        -activate "com.microsoft.VSCode"
     
-    # 第二个通知：1秒后确保注意到
-    sleep 1
+    # 第二个通知：2秒后重复
+    sleep 2
     terminal-notifier \
-        -title "🔔 授权请求等待中" \
+        -title "⚠️ Claude Code 需要授权" \
         -subtitle "项目: $PROJECT_NAME | 时间: $TIMESTAMP" \
-        -message "Claude Code 正在等待您的响应" \
-        -sound "Ping" \
-        -group "claude-auth-reminder" \
-        -ignoreDnD
-    
-    # 第三个通知：5秒后最后提醒
-    (sleep 5 && terminal-notifier \
-        -title "⏰ 请立即响应" \
-        -subtitle "项目: $PROJECT_NAME" \
-        -message "Claude Code 授权请求仍在等待" \
-        -sound "Basso" \
-        -group "claude-auth-final" \
+        -message "$AUTH_TYPE" \
+        -sound "Blow" \
+        -group "claude-auth-repeat" \
         -ignoreDnD \
-        -activate "com.microsoft.VSCode") &
+        -activate "com.microsoft.VSCode"
 else
     # 备用方案：使用 osascript 并选择更醒目的提示音
     /usr/bin/osascript <<EOF
