@@ -41,17 +41,17 @@ EOF
     echo "   bash /Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/install_notifier.sh"
 fi
 
-# 记录到日志
-LOG_DIR=~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config
-LOG_FILE="$LOG_DIR/claude_tasks.log"
-mkdir -p "$LOG_DIR"
-
-echo "[$FULL_TIME]" >> "$LOG_FILE"
-echo "  项目: $PROJECT_NAME" >> "$LOG_FILE"
-echo "  路径: $PROJECT_PATH" >> "$LOG_FILE"
-echo "  状态: $GIT_INFO" >> "$LOG_FILE"
-echo "  任务: $WORK_DONE" >> "$LOG_FILE"
-echo "---" >> "$LOG_FILE"
+# 日志功能（默认禁用，如需启用请取消注释）
+# LOG_DIR=~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config
+# LOG_FILE="$LOG_DIR/claude_tasks.log"
+# mkdir -p "$LOG_DIR"
+# 
+# echo "[$FULL_TIME]" >> "$LOG_FILE"
+# echo "  项目: $PROJECT_NAME" >> "$LOG_FILE"
+# echo "  路径: $PROJECT_PATH" >> "$LOG_FILE"
+# echo "  状态: $GIT_INFO" >> "$LOG_FILE"
+# echo "  任务: $WORK_DONE" >> "$LOG_FILE"
+# echo "---" >> "$LOG_FILE"
 
 # 终端输出（美化版）
 echo ""

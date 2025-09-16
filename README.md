@@ -18,8 +18,7 @@ ClaudeCode_Config/
 ├── claude_hooks_setup.md          # 详细配置指南
 ├── claude_notify_terminal.sh      # 任务完成通知脚本
 ├── claude_auth_notify.sh          # 授权请求提醒脚本
-├── claude_tasks.log              # 任务完成日志
-├── claude_auth_requests.log      # 授权请求日志
+├── claude_auth_dialog.sh          # 授权请求对话框脚本（可选）
 └── hooks.md                      # Hooks 原理说明
 ```
 
@@ -103,27 +102,22 @@ bash ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/c
 | `claude_notify_terminal.sh` | Stop | 任务完成通知 | Glass（温和） |
 | `claude_auth_notify.sh` | HumanInputRequired | 授权请求提醒 | Blow/Ping（紧急） |
 
-## 📊 日志管理
+## 📊 日志管理（可选）
 
-### 查看日志
+日志功能默认已禁用。如需启用，请编辑脚本文件，取消注释日志相关代码。
 
+### 启用日志
+
+编辑脚本文件，找到以下注释部分并取消注释：
 ```bash
-# 查看任务完成记录
-tail -f ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_tasks.log
-
-# 查看授权请求记录
-tail -f ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_requests.log
+# 日志功能（默认禁用，如需启用请取消注释）
 ```
 
-### 清空日志
+### 日志文件位置
 
-```bash
-# 清空任务日志
-> ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_tasks.log
-
-# 清空授权日志
-> ~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_requests.log
-```
+启用后，日志将保存在：
+- 任务日志：`~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_tasks.log`
+- 授权日志：`~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_requests.log`
 
 ## 🔧 故障排除
 

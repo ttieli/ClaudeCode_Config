@@ -70,8 +70,8 @@ echo ""
 afplay /System/Library/Sounds/Glass.aiff 2>/dev/null &
 
 
-# 记录到日志
-LOG_DIR=~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config
-LOG_FILE="$LOG_DIR/claude_auth_requests.log"
-mkdir -p "$LOG_DIR"
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] 授权请求 - 项目: $PROJECT_NAME - 类型: $AUTH_TYPE" >> "$LOG_FILE"
+# 日志功能（默认禁用，如需启用请取消注释）
+# LOG_DIR=~/Library/Mobile\ Documents/com~apple~CloudDocs/Project/ClaudeCode_Config
+# LOG_FILE="$LOG_DIR/claude_auth_requests.log"
+# mkdir -p "$LOG_DIR"
+# echo "[$(date '+%Y-%m-%d %H:%M:%S')] 授权请求 - 项目: $PROJECT_NAME - 类型: $AUTH_TYPE" >> "$LOG_FILE"
