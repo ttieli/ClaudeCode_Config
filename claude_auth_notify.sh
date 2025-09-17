@@ -3,6 +3,12 @@
 # Claude Code 授权请求通知脚本
 # 用于在 Claude Code 请求授权时发送系统通知
 
+# 自动加载 .env 文件（如果存在）
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    source "$SCRIPT_DIR/.env"
+fi
+
 # 配置区域
 # Bark 配置 - 从环境变量读取，保护隐私
 # 设置方法：export BARK_KEY="your_bark_key"

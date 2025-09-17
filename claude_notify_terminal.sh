@@ -2,6 +2,12 @@
 
 # Claude Code 通知脚本 - 支持 Bark（手机通知）和 terminal-notifier（本地通知）
 
+# 自动加载 .env 文件（如果存在）
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    source "$SCRIPT_DIR/.env"
+fi
+
 # 配置区域
 # Bark 配置 - 从环境变量读取，保护隐私
 # 设置方法：export BARK_KEY="your_bark_key"
