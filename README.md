@@ -122,13 +122,15 @@ Execute `/hooks` in Claude Code session to configure two events:
 
 **Stop Event - Task Completion Notification**
 ```bash
-bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_notify_terminal.sh"
+claude-notify "Task completed"
 ```
+> Alternative (if not using global command): `bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_notify_terminal.sh"`
 
 **Notification Event - Tool Call Notification**
 ```bash
-bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh"
+claude-auth "Authorization required"
 ```
+> Alternative (if not using global command): `bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh"`
 
 Save both configurations to **User Settings** (applies to all projects)
 
@@ -288,13 +290,15 @@ open x-apple.systempreferences:com.apple.preference.notifications
 
 **Stop 事件 - 任务完成通知**
 ```bash
-bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_notify_terminal.sh"
+claude-notify "任务完成"
 ```
+> 备选方案（如果未使用全局命令）：`bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_notify_terminal.sh"`
 
 **Notification 事件 - 工具调用通知**
 ```bash
-bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh"
+claude-auth "需要授权"
 ```
+> 备选方案（如果未使用全局命令）：`bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh"`
 
 两个配置都保存到 **User Settings**（所有项目生效）
 
@@ -335,6 +339,12 @@ export CLAUDE_NOTIFY_METHOD="both"
 
 ## 📜 Version History | 版本历史
 
+### v3.2 (2025-09-17)
+- 🎯 Simplified hook configuration with global commands | 使用全局命令简化 hook 配置
+- 🔧 Fixed path issues with spaces in directory names | 修复目录名中包含空格的路径问题
+- 📝 Updated README with dual configuration options | 更新 README 提供双重配置选项
+- ✅ Maintains full backward compatibility | 保持完全向后兼容性
+
 ### v3.1 (2025-09-17)
 - 🚀 Added one-click installation script | 新增一键安装脚本
 - 🔗 Path compatibility via symbolic links | 通过符号链接实现路径兼容
@@ -355,4 +365,4 @@ export CLAUDE_NOTIFY_METHOD="both"
 
 ---
 
-*Current Version | 当前版本：3.1 | Last Updated | 最后更新：2025-09-17*
+*Current Version | 当前版本：3.2 | Last Updated | 最后更新：2025-09-17*
