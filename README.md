@@ -24,6 +24,7 @@ Configure macOS system notifications for Claude Code, supporting both local noti
 ```
 ClaudeCode_Config/
 ├── README.md                      # This document
+├── install.sh                     # One-click installation script (New)
 ├── claude_notify_terminal.sh      # Task completion notification script
 ├── claude_auth_notify.sh          # Tool call notification script
 ├── .env.example                   # Environment variable configuration example
@@ -33,6 +34,26 @@ ClaudeCode_Config/
 ```
 
 ### 🚀 Quick Start
+
+#### Automatic Installation (Recommended)
+
+One-click installation for all users:
+
+```bash
+# Clone repository
+git clone https://github.com/yourusername/ClaudeCode_Config.git
+cd ClaudeCode_Config
+
+# Run installation script
+./install.sh
+```
+
+The installation script will automatically:
+- ✅ Create compatible paths
+- ✅ Install dependencies
+- ✅ Configure Bark (optional)
+- ✅ Test notifications
+- ✅ Display Hook commands
 
 #### 1. Configure Bark Mobile Push (Optional)
 
@@ -96,6 +117,8 @@ open x-apple.systempreferences:com.apple.preference.notifications
 #### 4. Configure Claude Code Hooks
 
 Execute `/hooks` in Claude Code session to configure two events:
+
+> 💡 **Tip**: After running `./install.sh`, you can use these standard commands regardless of where you cloned the project.
 
 **Stop Event - Task Completion Notification**
 ```bash
@@ -164,6 +187,7 @@ Welcome to suggest improvements or share your configuration optimization solutio
 ```
 ClaudeCode_Config/
 ├── README.md                      # 本文档
+├── install.sh                     # 一键安装脚本（新增）
 ├── claude_notify_terminal.sh      # 任务完成通知脚本
 ├── claude_auth_notify.sh          # 工具调用通知脚本
 ├── .env.example                   # 环境变量配置示例
@@ -173,6 +197,28 @@ ClaudeCode_Config/
 ```
 
 ### 🚀 快速开始
+
+#### 自动安装（推荐 | Recommended）
+
+适用于所有用户的一键安装方式：
+One-click installation for all users:
+
+```bash
+# 克隆仓库 | Clone repository
+git clone https://github.com/yourusername/ClaudeCode_Config.git
+cd ClaudeCode_Config
+
+# 运行安装脚本 | Run installation script
+./install.sh
+```
+
+安装脚本会自动：
+The installation script will automatically:
+- ✅ 创建兼容路径 | Create compatible paths
+- ✅ 安装依赖项 | Install dependencies
+- ✅ 配置 Bark（可选）| Configure Bark (optional)
+- ✅ 测试通知功能 | Test notifications
+- ✅ 显示 Hook 命令 | Display Hook commands
 
 #### 1. 配置 Bark 手机推送（可选）
 
@@ -237,6 +283,9 @@ open x-apple.systempreferences:com.apple.preference.notifications
 
 在 Claude Code 会话中执行 `/hooks`，配置两个事件：
 
+> 💡 **提示**: 运行 `./install.sh` 后，无论您将项目克隆到何处，都可以使用以下标准命令。
+> **Tip**: After running `./install.sh`, you can use these standard commands regardless of where you cloned the project.
+
 **Stop 事件 - 任务完成通知**
 ```bash
 bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_notify_terminal.sh"
@@ -286,6 +335,12 @@ export CLAUDE_NOTIFY_METHOD="both"
 
 ## 📜 Version History | 版本历史
 
+### v3.1 (2025-09-17)
+- 🚀 Added one-click installation script | 新增一键安装脚本
+- 🔗 Path compatibility via symbolic links | 通过符号链接实现路径兼容
+- 📝 Improved documentation for GitHub users | 改进文档对 GitHub 用户更友好
+- ✅ Maintains backward compatibility | 保持向后兼容性
+
 ### v3.0 (2025-09-17)
 - 📱 Added Bark mobile push support | 新增 Bark 手机推送支持
 - 🔐 Use environment variables to protect Bark key privacy | 使用环境变量保护 Bark key 隐私
@@ -300,4 +355,4 @@ export CLAUDE_NOTIFY_METHOD="both"
 
 ---
 
-*Current Version | 当前版本：3.0 | Last Updated | 最后更新：2025-09-17*
+*Current Version | 当前版本：3.1 | Last Updated | 最后更新：2025-09-17*
