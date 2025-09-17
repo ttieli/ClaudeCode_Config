@@ -4,10 +4,23 @@
 # 用于在 Claude Code 请求授权时发送系统通知
 
 # 配置区域
-# Bark 配置（请替换为您的 Bark 服务器地址和设备 key）
-BARK_URL="https://api.day.app/DrenQViCvkjGdrBHShWLM6"
+# Bark 配置 - 从环境变量读取，保护隐私
+# 设置方法：export BARK_KEY="your_bark_key"
+BARK_KEY="${BARK_KEY:-}"
+BARK_SERVER="${BARK_SERVER:-https://api.day.app}"
 # 通知方式：bark（默认）, terminal, both（两者都用）
 NOTIFY_METHOD="${CLAUDE_NOTIFY_METHOD:-bark}"
+
+# 检查 Bark 配置
+check_bark_config() {
+    if [ -z "$BARK_KEY" ]; then
+        echo "⚠️  BARK_KEY 环境变量未设置"
+        echo "   请在 ~/.zshrc 或 ~/.bashrc 中添加："
+        echo "   export BARK_KEY=\"your_bark_key\""
+        return 1
+    fi
+    return 0
+}
 
 # 智能获取项目名称
 get_project_name() {
@@ -28,6 +41,12 @@ AUTH_TYPE="${1:-需要您的授权}"
 
 # Bark 授权通知函数
 send_bark_auth() {
+    # 检查 Bark 配置
+    if ! check_bark_config; then
+        send_terminal_auth
+        return
+    fi
+    
     local title="⚠️ Claude Code 需要授权"
     local body="项目: $PROJECT_NAME | 类型: $AUTH_TYPE | 时间: $TIMESTAMP"
     
@@ -36,7 +55,7 @@ send_bark_auth() {
     local encoded_body=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$body'))")
     
     # 构建完整 URL
-    local full_url="$BARK_URL/$encoded_title/$encoded_body?group=ClaudeAuth&sound=glass.caf"
+    local full_url="$BARK_SERVER/$BARK_KEY/$encoded_title/$encoded_body?group=ClaudeAuth&sound=glass.caf"
     
     # 发送通知
     if response=$(curl -s -m 10 "$full_url" 2>&1) && echo "$response" | grep -q '"code":200'; then
