@@ -49,6 +49,7 @@ cd ClaudeCode_Config
 ```
 
 The installation script will automatically:
+
 - ✅ Create compatible paths
 - ✅ Install dependencies
 - ✅ Configure Bark (optional)
@@ -60,6 +61,7 @@ The installation script will automatically:
 If you want to receive mobile push notifications:
 
 **Install Bark App**
+
 1. Install [Bark](https://apps.apple.com/app/bark-customed-notifications/id1403753865) from App Store on your iPhone/iPad
 2. Open the app and copy your key from the push URL
    - Example URL: `https://api.day.app/YOUR_KEY_HERE/content`
@@ -68,12 +70,14 @@ If you want to receive mobile push notifications:
 **Configure Bark Key**
 
 Method 1: Using configuration helper (Recommended)
+
 ```bash
 # Run configuration script
 bash setup_bark.sh
 ```
 
 Method 2: Manual configuration
+
 ```bash
 # Edit shell configuration file
 echo 'export BARK_KEY="your_bark_key"' >> ~/.zshrc
@@ -82,6 +86,7 @@ source ~/.zshrc
 ```
 
 Method 3: Using .env file
+
 ```bash
 # Copy example file and edit
 cp .env.example .env
@@ -121,15 +126,19 @@ Execute `/hooks` in Claude Code session to configure two events:
 > 💡 **Tip**: After running `./install.sh`, you can use these standard commands regardless of where you cloned the project.
 
 **Stop Event - Task Completion Notification**
+
 ```bash
 claude-notify "Task completed"
 ```
+
 > Alternative (if not using global command): `bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_notify_terminal.sh"`
 
 **Notification Event - Tool Call Notification**
+
 ```bash
 claude-auth "Authorization required"
 ```
+
 > Alternative (if not using global command): `bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh"`
 
 Save both configurations to **User Settings** (applies to all projects)
@@ -216,6 +225,7 @@ cd ClaudeCode_Config
 
 安装脚本会自动：
 The installation script will automatically:
+
 - ✅ 创建兼容路径 | Create compatible paths
 - ✅ 安装依赖项 | Install dependencies
 - ✅ 配置 Bark（可选）| Configure Bark (optional)
@@ -227,6 +237,7 @@ The installation script will automatically:
 如果您想接收手机推送通知：
 
 **安装 Bark App**
+
 1. 在 iPhone/iPad 上从 App Store 安装 [Bark](https://apps.apple.com/cn/app/bark-customed-notifications/id1403753865)
 2. 打开 App，复制您的推送 URL 中的 key 部分
    - 示例 URL：`https://api.day.app/YOUR_KEY_HERE/推送内容`
@@ -235,12 +246,14 @@ The installation script will automatically:
 **配置 Bark Key**
 
 方法 1：使用配置助手（推荐）
+
 ```bash
 # 运行配置脚本
 bash setup_bark.sh
 ```
 
 方法 2：手动配置
+
 ```bash
 # 编辑 shell 配置文件
 echo 'export BARK_KEY="your_bark_key"' >> ~/.zshrc
@@ -249,6 +262,7 @@ source ~/.zshrc
 ```
 
 方法 3：使用 .env 文件
+
 ```bash
 # 复制示例文件并编辑
 cp .env.example .env
@@ -289,15 +303,19 @@ open x-apple.systempreferences:com.apple.preference.notifications
 > **Tip**: After running `./install.sh`, you can use these standard commands regardless of where you cloned the project.
 
 **Stop 事件 - 任务完成通知**
+
 ```bash
 claude-notify "任务完成"
 ```
+
 > 备选方案（如果未使用全局命令）：`bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_notify_terminal.sh"`
 
 **Notification 事件 - 工具调用通知**
+
 ```bash
 claude-auth "需要授权"
 ```
+
 > 备选方案（如果未使用全局命令）：`bash "/Users/tieli/Library/Mobile Documents/com~apple~CloudDocs/Project/ClaudeCode_Config/claude_auth_notify.sh"`
 
 两个配置都保存到 **User Settings**（所有项目生效）
@@ -340,18 +358,21 @@ export CLAUDE_NOTIFY_METHOD="both"
 ## 📜 Version History | 版本历史
 
 ### v3.2 (2025-09-17)
+
 - 🎯 Simplified hook configuration with global commands | 使用全局命令简化 hook 配置
 - 🔧 Fixed path issues with spaces in directory names | 修复目录名中包含空格的路径问题
 - 📝 Updated README with dual configuration options | 更新 README 提供双重配置选项
 - ✅ Maintains full backward compatibility | 保持完全向后兼容性
 
 ### v3.1 (2025-09-17)
+
 - 🚀 Added one-click installation script | 新增一键安装脚本
 - 🔗 Path compatibility via symbolic links | 通过符号链接实现路径兼容
 - 📝 Improved documentation for GitHub users | 改进文档对 GitHub 用户更友好
 - ✅ Maintains backward compatibility | 保持向后兼容性
 
 ### v3.0 (2025-09-17)
+
 - 📱 Added Bark mobile push support | 新增 Bark 手机推送支持
 - 🔐 Use environment variables to protect Bark key privacy | 使用环境变量保护 Bark key 隐私
 - 🔄 Support auto-loading .env configuration file | 支持自动加载 .env 配置文件
@@ -359,6 +380,7 @@ export CLAUDE_NOTIFY_METHOD="both"
 - 📝 Fixed Hook event to Notification | 修正 Hook 事件为 Notification
 
 ### v2.2 (2025-09-16)
+
 - 🧠 Added smart project name recognition | 新增智能项目名称识别功能
 - 🔧 Optimized Git repository detection logic | 优化 Git 仓库检测逻辑
 - 📝 Merged configuration documents | 合并配置文档，精简项目结构
